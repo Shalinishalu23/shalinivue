@@ -1,11 +1,17 @@
 <template>
-<HeaderView />
-<router-view/>
-<FooterView />
-</template>
+  <v-app>
+    <HeaderView />
+    <br>
+    <br>
+    <br>
+    <router-view/>
+    <FooterView />
+  </v-app>
+  </template>
 <script>
 import HeaderView from '@/components/HeaderView'
 import FooterView from '@/components/FooterView'
+import '@/assets/style.css'
 
     export default {
         name:'App',
@@ -17,24 +23,4 @@ import FooterView from '@/components/FooterView'
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
