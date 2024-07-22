@@ -1,10 +1,20 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+<HeaderView />
+<router-view/>
+<FooterView />
 </template>
+<script>
+import HeaderView from '@/components/HeaderView'
+import FooterView from '@/components/FooterView'
+
+    export default {
+        name:'App',
+        components:{
+          HeaderView,
+          FooterView
+        }
+    }
+</script>
 
 <style>
 #app {
