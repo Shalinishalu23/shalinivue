@@ -4,7 +4,9 @@ export default createStore({
   state: {
     apiResponse: {},
     mindFood: {},
-    topRestaurant: {}
+    topRestaurant: {},
+    cities: [],
+    cuisines: [],
   },
   getters: {
     GET_API_RESPONSE (state){
@@ -15,6 +17,12 @@ export default createStore({
     },
     GET_TOP_RESTAURANT (state){
       return state.topRestaurant 
+    },
+    GET_CITIES (state){
+      return state.cities 
+    },
+    GET_CUISINES (state){
+      return state.cuisines
     }
   },
   mutations: {
@@ -26,6 +34,12 @@ export default createStore({
     },
     SET_TOP_RESTAURANT (state, value){
       state.topRestaurant = value
+    },
+    SET_CITIES (state, value){
+      state.cities = value
+    },
+    SET_CUISINES (state, value){
+      state.cuisines = value
     }
   },
   actions: {
@@ -36,8 +50,9 @@ export default createStore({
         const json = await response.json()
         if (response) {
           commit('SET_MIND_FOOD', json.data.cards[0].card.card.imageGridCards.info)
-          console.log('[1]', json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants)
           commit('SET_TOP_RESTAURANT', json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants)
+          commit('SET_CITIES', json.data.cards[6].card.card.brands)
+          commit('SET_CUISINES', json.data.cards[7].card.card.brands)
         }
       } catch (error) {
         console.log('error: ', error)

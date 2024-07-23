@@ -1,62 +1,80 @@
 <template>
   <WallPaper />
-  <br>
-  <span>What's on your mind?</span>
-  <v-row>
-  <div v-for="(items, index) in mindFood" :key="index"  >
-      <v-col>
-        <v-img
-          :src="imgUrl1 + items.imageId"
-          height="150" width="150" alt="Image {{ index }}"></v-img>
-      </v-col>
-    </div>
-  </v-row>
-  <v-divider class="bg-red-700"></v-divider>
-
-  <span>Top restaurant</span>
-  <v-row>
-  <div v-for="(items, index) in topRestaurant" :key="index"  >
-      <v-col>
-        <v-img
-          :src="imgUrl2 + items.info.cloudinaryImageId"
-          height="250" width="250" alt="Image {{ index }}"></v-img>
-      </v-col>
-    </div>
-  </v-row>
-  <br>
-  <br>
-  <br>
-  <div>
+  <div class="m-20">
+    <span>What's on your mind?</span>
+    <v-infinite-scroll direction="horizontal" @load="load">
+      <template v-for="(item, index) in mindFood" :key="item">
+        <div>
+          <v-img :src="imgUrl1 + item.imageId" height="200" width="200" alt="Image {{ index }}"></v-img>
+        </div>
+      </template>
+    </v-infinite-scroll>
+    <span>Top restaurant</span>
+    <v-infinite-scroll direction="horizontal" @load="load">
+      <template v-for="(item, index) in topRestaurant" :key="index">
+        <div>
+          <Card :resData="item.info" :key="index" />
+        </div>
+      </template>
+    </v-infinite-scroll>
+    <br>
+    <br>
+    Best Places to Eat Across Cities
+    <v-row>
+      <div v-for="(item, index) in cities.slice(0, this.limit)">
+        <v-col>
+          <v-card :key="index" width="300" :title="item.text" link elevation="4"></v-card>
+        </v-col>
+      </div>
+      <v-card @click="showMore('cities')" :key="index" width="300" title="Show More"
+        elevation="4"></v-card>
+    </v-row>
+    <br>
+    Best Cuisines Near Me
+    <v-row>
+      <div v-for="(item, index) in cuisines.slice(0, this.limit)">
+        <v-col>
+          <v-card :key="index" width="300" :title="item.text" link elevation="4"></v-card>
+        </v-col>
+      </div>
+      <v-card @click="showMore('cuisines')" :key="index" width="300" title="Show More" elevation="4"></v-card>
+    </v-row>
   </div>
 </template>
-
 <script>
-// @ is an alias to /src
 import { mapActions, mapState, mapGetters } from 'vuex'
-import WallPaper from '@/components/WallPaper.vue'
+import WallPaper from '@/components/WallPaper'
 import { IMG_CDN_URL, IMG_CDN_URL1 } from '@/store/constant'
+import Card from '@/components/Card'
 export default {
   name: 'HomeView',
   components: {
-    WallPaper
+    WallPaper,
+    Card
   },
   data() {
     return {
       imgUrl1: IMG_CDN_URL,
-      imgUrl2: IMG_CDN_URL1
+      imgUrl2: IMG_CDN_URL1,
+      limit: 7
     }
   },
   computed: {
     ...mapGetters({
       mindFood: 'GET_MIND_FOOD',
-      topRestaurant: 'GET_TOP_RESTAURANT'
+      topRestaurant: 'GET_TOP_RESTAURANT',
+      cities: 'GET_CITIES',
+      cuisines: 'GET_CUISINES',
     })
   },
   async mounted() {
     await this.getRequest()
   },
   methods: {
-    ...mapActions(['getRequest'])
+    ...mapActions(['getRequest']),
+    showMore(data) {
+      this.limit = this[data].length - 1
+    }
   }
 }
 </script>
