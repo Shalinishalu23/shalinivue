@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-app-bar :elevation="2">
-            <img src="@/assets/logo1.jpg" alt="logo">
+            <img src="@/assets/logo1.jpg" width="150" height="150" alt="logo">
             <v-app-bar-title class="text-3xl font-bold font-mono">Order Your Food Anywhere Everywhere</v-app-bar-title>
             <template v-slot:append>
                 <v-btn icon="mdi-magnify"></v-btn>
