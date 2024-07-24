@@ -4,10 +4,7 @@
     <span>What's on your mind?</span>
     <v-infinite-scroll direction="horizontal" @load="load">
       <template v-for="(item, index) in mindFood" :key="item">
-        <div>
-          <v-img :src="imgUrl1 + item.imageId" height="200" width="200" alt="Image {{ index }}" @click=testing()></v-img>
-          <div className="shimmer-circle"></div>
-        </div>
+          <v-img :src="imgUrl1 + item.imageId" height="200" width="200" alt="Image {{ index }}" @click=onClick(item)></v-img>
       </template>
       <template v-if="!mindFood.length"   key={index} v-for="(item, index) in limit" :key="item">
           <div className="shimmer-circle"></div>
@@ -81,8 +78,12 @@ export default {
     showMore(data) {
       this.limit = this[data].length - 1
     },
-    testing(){
-      console.log("inside testing");
+    onClick(id){
+      // console.log('id: ', id.action.link)
+      // this.$router.push({name:'collections', params: { collectionId:id}})
+      // window.location.href(id.action.link);
+      // window.location.replace(id.action.link);
+      window.open(id.action.link, '_blank');
     }
   }
 }
@@ -96,7 +97,7 @@ export default {
 }
 .shimmer-circle {
   width: 150px;
-  height: 150px;
+  height: 120px;
   background: lightgray;
   margin: 20px;
   border-radius: 50%;
