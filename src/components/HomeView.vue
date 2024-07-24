@@ -5,8 +5,12 @@
     <v-infinite-scroll direction="horizontal" @load="load">
       <template v-for="(item, index) in mindFood" :key="item">
         <div>
-          <v-img :src="imgUrl1 + item.imageId" height="200" width="200" alt="Image {{ index }}"></v-img>
+          <v-img :src="imgUrl1 + item.imageId" height="200" width="200" alt="Image {{ index }}" @click=testing()></v-img>
+          <div className="shimmer-circle"></div>
         </div>
+      </template>
+      <template v-if="!mindFood.length"   key={index} v-for="(item, index) in limit" :key="item">
+          <div className="shimmer-circle"></div>
       </template>
     </v-infinite-scroll>
     <span>Top restaurant</span>
@@ -16,8 +20,10 @@
           <Card :resData="item.info" :key="index" />
         </div>
       </template>
+      <template v-if="!topRestaurant.length"   key={index} v-for="(item, index) in limit" :key="item">
+          <div className="shimmer-card"></div>
+      </template>
     </v-infinite-scroll>
-    <br>
     <br>
     Best Places to Eat Across Cities
     <v-row>
@@ -74,7 +80,25 @@ export default {
     ...mapActions(['getRequest']),
     showMore(data) {
       this.limit = this[data].length - 1
+    },
+    testing(){
+      console.log("inside testing");
     }
   }
 }
 </script>
+<style>
+.shimmer-card {
+  width: 200px;
+  height: 200px;
+  background: lightgray;
+  margin: 20px;
+}
+.shimmer-circle {
+  width: 150px;
+  height: 150px;
+  background: lightgray;
+  margin: 20px;
+  border-radius: 50%;
+}
+</style>

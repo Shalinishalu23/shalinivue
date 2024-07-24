@@ -1,7 +1,7 @@
 <template>
-    <v-card :loading="loading" class="mx-4 my-12 rounded-lg" max-width="300" min-width="300" max-height="320"
-        min-height="320" elevation="4">
-        <v-img :src="imgUrl2 + resData.cloudinaryImageId" alt="Image{{ resData.id }}" height="150"></v-img>
+    <v-card :loading="loading" class="mx-4 my-12 rounded-lg" width="300"  height="360" onClick="testing()"
+    elevation="1">
+    <v-img :src="imgUrl2 + resData.cloudinaryImageId" alt="Image{{ resData.id }}"></v-img>
         <v-card-title class="font-bold">{{ resData.name }}</v-card-title>
         <v-card-text>
             <v-row align="center" class="mx-0">
@@ -13,8 +13,7 @@
             <div class="my-4 text-subtitle-1">
                 {{ resData.cuisines[0] }} , {{ resData.cuisines[1] }}
             </div>
-            <v-chip>{{ resData.sla.slaString }}</v-chip>
-            <v-card-subtitle class="font-bold">{{ resData.name }}</v-card-subtitle>
+            <v-chip>{{ resData.sla.slaString }}</v-chip> <br>
         </v-card-text>
     </v-card>
 </template>
@@ -31,6 +30,11 @@ export default {
     data() {
         return {
             imgUrl2: IMG_CDN_URL1
+        }
+    },
+    methods: {
+        testing(){
+            console.log('testing: ')
         }
     }
 }
