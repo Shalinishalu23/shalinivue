@@ -68,10 +68,19 @@ export default {
       topRestaurant: 'GET_TOP_RESTAURANT',
       cities: 'GET_CITIES',
       cuisines: 'GET_CUISINES',
+      address: 'GET_ADDRESS',
     })
   },
   async mounted() {
-    await this.getRequest()
+    await this.getRequest({latitude:'12.9351929', longitude:'77.6244806'})
+  },
+  watch: {
+    group() {
+      this.drawer = true
+    },
+    address(newVal, oldVal) {
+      this.getRequest({latitude:newVal.location.lat, longitude:newVal.location.lng})
+    }
   },
   methods: {
     ...mapActions(['getRequest']),
@@ -79,10 +88,6 @@ export default {
       this.limit = this[data].length - 1
     },
     onClick(id) {
-      // console.log('id: ', id.action.link)
-      // this.$router.push({name:'collections', params: { collectionId:id}})
-      // window.location.href(id.action.link);
-      // window.location.replace(id.action.link);
       window.open(id.action.link, '_blank');
     },
   }

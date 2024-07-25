@@ -6,7 +6,9 @@ export default createStore({
     mindFood: {},
     topRestaurant: {},
     cities: [],
-    cuisines: []
+    cuisines: [],
+    searchedLocation:[],
+    address:{}
   },
   getters: {
     GET_API_RESPONSE (state){
@@ -23,6 +25,12 @@ export default createStore({
     },
     GET_CUISINES (state){
       return state.cuisines
+    },
+    GET_SEARCH_LOCATION (state){
+      return state.searchedLocation
+    },
+    GET_ADDRESS (state){
+      return state.address
     }
   },
   mutations: {
@@ -40,14 +48,18 @@ export default createStore({
     },
     SET_CUISINES (state, value){
       state.cuisines = value
+    },
+    SET_SEARCH_LOCATION (state, value){
+      state.searchedLocation = value
+    },
+    SET_ADDRESS(state, value){
+      state.address = value
     }
   },
   actions: {
     async getRequest({ commit, dispatch, state }, value){
-      console.log('value: ', value);
-
       try {
-        const response = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5/?lat=12.9351929&lng=77.62448069999999')
+        const response = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5/?lat='+value.latitude+'&lng='+value.longitude)
         const json = await response.json()
         if (response) {
           commit('SET_MIND_FOOD', json.data.cards[0].card.card.imageGridCards.info)
@@ -67,13 +79,24 @@ export default createStore({
         console.log('error: ', error)
       }
     },
-    async getCollectionId({ commit, dispatch, state }, value){
+    async getLocation({ commit, dispatch, state }, value){
       console.log('value: ', value)
-      console.log('getRequest: ')
       try {
-        const response = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5/?lat=12.9351929&lng=77.62448069999999'+ value)
-        const json = await response.json()
+        const response = await fetch('https://www.swiggy.com/dapi/misc/place-autocomplete?input='+ value)
         if (response) {
+          const json = await response.json()
+          commit('SET_SEARCH_LOCATION', json.data)
+        }
+      } catch (error) {
+        console.log('error: ', error)
+      }
+    },
+    async getAddress({ commit, dispatch, state }, value){
+      try {
+        const response = await fetch('https://www.swiggy.com/dapi/misc/address-recommend?place_id='+ value)
+        if (response) {
+          const json = await response.json()
+          commit('SET_ADDRESS', json.data[0].geometry)
         }
       } catch (error) {
         console.log('error: ', error)
