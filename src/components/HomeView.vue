@@ -4,10 +4,11 @@
     <span>What's on your mind?</span>
     <v-infinite-scroll direction="horizontal" @load="load">
       <template v-for="(item, index) in mindFood" :key="item">
-          <v-img :src="imgUrl1 + item.imageId" height="200" width="200" alt="Image {{ index }}" @click=onClick(item)></v-img>
+        <v-img :src="imgUrl1 + item.imageId" height="200" width="200" alt="Image {{ index }}"
+          @click=onClick(item)></v-img>
       </template>
-      <template v-if="!mindFood.length"   key={index} v-for="(item, index) in limit" :key="item">
-          <div className="shimmer-circle"></div>
+      <template v-if="!mindFood.length" key={index} v-for="(item, index) in limit" :key="item">
+        <div className="shimmer-circle"></div>
       </template>
     </v-infinite-scroll>
     <span>Top restaurant</span>
@@ -17,8 +18,8 @@
           <Card :resData="item.info" :key="index" />
         </div>
       </template>
-      <template v-if="!topRestaurant.length"   key={index} v-for="(item, index) in limit" :key="item">
-          <div className="shimmer-card"></div>
+      <template v-if="!topRestaurant.length" key={index} v-for="(item, index) in limit" :key="item">
+        <div className="shimmer-card"></div>
       </template>
     </v-infinite-scroll>
     <br>
@@ -29,8 +30,7 @@
           <v-card :key="index" width="300" :title="item.text" link elevation="4"></v-card>
         </v-col>
       </div>
-      <v-card @click="showMore('cities')" :key="index" width="300" title="Show More"
-        elevation="4"></v-card>
+      <v-card @click="showMore('cities')" :key="index" width="300" title="Show More" elevation="4"></v-card>
     </v-row>
     <br>
     Best Cuisines Near Me
@@ -78,13 +78,13 @@ export default {
     showMore(data) {
       this.limit = this[data].length - 1
     },
-    onClick(id){
+    onClick(id) {
       // console.log('id: ', id.action.link)
       // this.$router.push({name:'collections', params: { collectionId:id}})
       // window.location.href(id.action.link);
       // window.location.replace(id.action.link);
       window.open(id.action.link, '_blank');
-    }
+    },
   }
 }
 </script>
@@ -95,6 +95,7 @@ export default {
   background: lightgray;
   margin: 20px;
 }
+
 .shimmer-circle {
   width: 150px;
   height: 120px;

@@ -6,7 +6,7 @@ export default createStore({
     mindFood: {},
     topRestaurant: {},
     cities: [],
-    cuisines: [],
+    cuisines: []
   },
   getters: {
     GET_API_RESPONSE (state){
@@ -43,10 +43,11 @@ export default createStore({
     }
   },
   actions: {
-    async getRequest({ commit, dispatch, state }){
-      console.log('getRequest: ')
+    async getRequest({ commit, dispatch, state }, value){
+      console.log('value: ', value);
+
       try {
-        const response = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5/?lat=12.9351929&lng=77.62448069999999&page_type=null')
+        const response = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5/?lat=12.9351929&lng=77.62448069999999')
         const json = await response.json()
         if (response) {
           commit('SET_MIND_FOOD', json.data.cards[0].card.card.imageGridCards.info)
@@ -59,7 +60,7 @@ export default createStore({
           commit('SET_CUISINES', json.data.cards[7].card.card.brands)
           // console.log('json.data.cards: 8', json.data.cards[8]) // Explore Every Restaurants Near Me
           // console.log('json.data.cards: 9', json.data.cards[9]) // play store
-          // console.log('json.data.cards: 10', json.data.cards[10]) // cities
+          // console.log('json.data.cards: 10',  json.data.cards[10].card.card.cities) // cities
           // console.log('json.data.cards: 11', json.data.cards[11]) // some desc
         }
       } catch (error) {
