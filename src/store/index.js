@@ -46,7 +46,7 @@ export default createStore({
     async getRequest({ commit, dispatch, state }){
       console.log('getRequest: ')
       try {
-        const response = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5/?lat=12.9351929&lng=77.62448069999999')
+        const response = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5/?lat=12.9351929&lng=77.62448069999999&page_type=null')
         const json = await response.json()
         if (response) {
           commit('SET_MIND_FOOD', json.data.cards[0].card.card.imageGridCards.info)
